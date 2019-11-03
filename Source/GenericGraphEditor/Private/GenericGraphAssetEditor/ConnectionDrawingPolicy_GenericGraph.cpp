@@ -1,4 +1,5 @@
 #include "ConnectionDrawingPolicy_GenericGraph.h"
+#include "Rendering/DrawElements.h"
 #include "EdNode_GenericGraphNode.h"
 #include "EdNode_GenericGraphEdge.h"
 
@@ -62,37 +63,25 @@ void FConnectionDrawingPolicy_GenericGraph::DrawSplineWithArrow(const FVector2D&
 
 void FConnectionDrawingPolicy_GenericGraph::Internal_DrawLineWithArrow(const FVector2D& StartAnchorPoint, const FVector2D& EndAnchorPoint, const FConnectionParams& Params)
 {
-	//@TODO: Should this be scaled by zoom factor?
-	const float LineSeparationAmount = 4.5f;
+	DrawConnection(WireLayerID, StartAnchorPoint, EndAnchorPoint, Params);
 
-	const FVector2D DeltaPos = EndAnchorPoint - StartAnchorPoint;
-	const FVector2D UnitDelta = DeltaPos.GetSafeNormal();
-	const FVector2D Normal = FVector2D(DeltaPos.Y, -DeltaPos.X).GetSafeNormal();
-
-	// Come up with the final start/end points
-	const FVector2D DirectionBias = Normal * LineSeparationAmount;
-	const FVector2D LengthBias = ArrowRadius.X * UnitDelta;
-	const FVector2D StartPoint = StartAnchorPoint + DirectionBias + LengthBias;
-	const FVector2D EndPoint = EndAnchorPoint + DirectionBias - LengthBias;
-
-	// Draw a line/spline
-	DrawConnection(WireLayerID, StartPoint, EndPoint, Params);
-
-	// Draw the arrow
-	const FVector2D ArrowDrawPos = EndPoint - ArrowRadius;
-	const float AngleInRadians = FMath::Atan2(DeltaPos.Y, DeltaPos.X);
-
-	FSlateDrawElement::MakeRotatedBox(
-		DrawElementsList,
-		ArrowLayerID,
-		FPaintGeometry(ArrowDrawPos, ArrowImage->ImageSize * ZoomFactor, ZoomFactor),
-		ArrowImage,
-		ESlateDrawEffect::None,
-		AngleInRadians,
-		TOptional<FVector2D>(),
-		FSlateDrawElement::RelativeToElement,
-		Params.WireColor
-	);
+	if (ArrowImage != nullptr)
+	{
+		const FVector2D DeltaPos = EndAnchorPoint - StartAnchorPoint;
+		const FVector2D ArrowDrawPos = EndAnchorPoint - ArrowRadius;
+		const float AngleInRadians = DeltaPos.IsNearlyZero() ? 0.0f : FMath::Atan2(DeltaPos.Y, DeltaPos.X);
+		FSlateDrawElement::MakeRotatedBox(
+			DrawElementsList,
+			ArrowLayerID,
+			FPaintGeometry(ArrowDrawPos, ArrowImage->ImageSize * ZoomFactor, ZoomFactor),
+			ArrowImage,
+			ESlateDrawEffect::None,
+			AngleInRadians,
+			TOptional<FVector2D>(),
+			FSlateDrawElement::RelativeToElement,
+			Params.WireColor
+		);
+	}
 }
 
 void FConnectionDrawingPolicy_GenericGraph::DrawSplineWithArrow(const FGeometry& StartGeom, const FGeometry& EndGeom, const FConnectionParams& Params)
