@@ -60,27 +60,8 @@ void UEdGraph_GenericGraph::RebuildGenericGraph()
 
 					if (ChildNode != nullptr)
 					{
-
-						FText ChildErrorMessage;
-						bool bCanChildNodeCreateConnection = ChildNode->CanCreateConnection(GenericGraphNode, ChildErrorMessage);
-
-						FText ParentErrorMessage;
-						bool bCanParentNodeCreateConnection = GenericGraphNode->CanCreateConnection(ChildNode, ParentErrorMessage);
-						
-						bool bCanCreateConnection = bCanChildNodeCreateConnection && bCanParentNodeCreateConnection;
-
-						if (bCanCreateConnection)
-						{
-							GenericGraphNode->ChildrenNodes.Add(ChildNode);
-							ChildNode->ParentNodes.Add(GenericGraphNode);
-						}
-						else
-						{
-							LOG_ERROR(TEXT("UEdGraph_GenericGraph::RebuildGenericGraph can't create connection: %s %s"), *ChildErrorMessage.ToString(), *ParentErrorMessage.ToString());
-						}
-
-						//GenericGraphNode->ChildrenNodes.Add(ChildNode);
-						//ChildNode->ParentNodes.Add(GenericGraphNode);
+						GenericGraphNode->ChildrenNodes.Add(ChildNode);
+						ChildNode->ParentNodes.Add(GenericGraphNode);
 					}
 					else
 					{
