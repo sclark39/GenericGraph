@@ -122,9 +122,12 @@ void UGenericGraph::ClearGraph()
 	{
 		UGenericGraphNode* Node = AllNodes[i];
 
-		Node->ParentNodes.Empty();
-		Node->ChildrenNodes.Empty();
-		Node->Edges.Empty();
+		if (Node)
+		{
+			Node->ParentNodes.Empty();
+			Node->ChildrenNodes.Empty();
+			Node->Edges.Empty();
+		}
 	}
 
 	AllNodes.Empty();
