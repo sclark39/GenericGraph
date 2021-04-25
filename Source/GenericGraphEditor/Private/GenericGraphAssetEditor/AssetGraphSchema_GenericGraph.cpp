@@ -343,7 +343,7 @@ const FPinConnectionResponse UAssetGraphSchema_GenericGraph::CanCreateConnection
 	}
 
 
-	if (EdNode_Out->GenericGraphNode->GetGraph()->bEdgeEnabled)
+	if (EdNode_Out->GenericGraphNode->GetEdgeType() && EdNode_Out->GenericGraphNode->GetGraph()->bEdgeEnabled)
 	{
 		return FPinConnectionResponse(CONNECT_RESPONSE_MAKE_WITH_CONVERSION_NODE, LOCTEXT("PinConnect", "Connect nodes with edge"));
 	}
@@ -397,9 +397,13 @@ bool UAssetGraphSchema_GenericGraph::CreateAutomaticConversionNodeAndConnections
 
 	FVector2D InitPos((NodeA->NodePosX + NodeB->NodePosX) / 2, (NodeA->NodePosY + NodeB->NodePosY) / 2);
 
+	TSubclassOf<UGenericGraphEdge> EdgeType = NodeA->GenericGraphNode->GetEdgeType();
+	if (!EdgeType)
+		return false;
+
 	FAssetSchemaAction_GenericGraph_NewEdge Action;
 	Action.NodeTemplate = NewObject<UEdNode_GenericGraphEdge>(NodeA->GetGraph());
-	Action.NodeTemplate->SetEdge(NewObject<UGenericGraphEdge>(Action.NodeTemplate, Graph->EdgeType));
+	Action.NodeTemplate->SetEdge(NewObject<UGenericGraphEdge>(Action.NodeTemplate, EdgeType));
 	UEdNode_GenericGraphEdge* EdgeNode = Cast<UEdNode_GenericGraphEdge>(Action.PerformAction(NodeA->GetGraph(), nullptr, InitPos, false));
 
 	// Always create connections from node A to B, don't allow adding in reverse

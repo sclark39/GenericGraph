@@ -78,6 +78,8 @@ public:
 #endif
 
 #if WITH_EDITOR
+	virtual TSubclassOf<UGenericGraphEdge> GetEdgeType() const;
+
 	virtual bool IsNameEditable() const;
 
 	virtual FLinearColor GetBackgroundColor() const;
