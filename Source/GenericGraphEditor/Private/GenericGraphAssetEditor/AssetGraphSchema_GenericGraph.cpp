@@ -63,6 +63,9 @@ private:
 	TSet<UEdGraphNode*> FinishedNodes;
 };
 
+
+
+
 UEdGraphNode* FAssetSchemaAction_GenericGraph_NewNode::PerformAction(class UEdGraph* ParentGraph, UEdGraphPin* FromPin, const FVector2D Location, bool bSelectNewNode /*= true*/)
 {
 	UEdGraphNode* ResultNode = nullptr;
@@ -188,6 +191,23 @@ EGraphType UAssetGraphSchema_GenericGraph::GetGraphType(const UEdGraph* TestEdGr
 	return GT_StateMachine;
 }
 
+void UAssetGraphSchema_GenericGraph::CreateDefaultNodesForGraph(UEdGraph& Graph) const
+{
+	UGenericGraph *GenericGraph = CastChecked<UEdGraph_GenericGraph>(&Graph)->GetGenericGraph();
+	TSubclassOf<UGenericGraphNode> RootNodeType = GenericGraph->RootNodeType;
+
+	if (RootNodeType)
+	{
+		FGraphNodeCreator< UEdNode_GenericGraphNode> NodeCreator(Graph);
+		UEdNode_GenericGraphNode *RootNode = NodeCreator.CreateNode(false);
+		RootNode->GenericGraphNode = NewObject<UGenericGraphNode>(RootNode, RootNodeType);
+		RootNode->GenericGraphNode->Graph = GenericGraph;
+		NodeCreator.Finalize();
+		SetNodeMetaData(RootNode, FNodeMetadata::DefaultGraphNode);
+	}
+
+}
+
 void UAssetGraphSchema_GenericGraph::GetGraphContextActions(FGraphContextMenuBuilder& ContextMenuBuilder) const
 {
 	UGenericGraph* Graph = CastChecked<UGenericGraph>(ContextMenuBuilder.CurrentGraph->GetOuter());
@@ -212,6 +232,13 @@ void UAssetGraphSchema_GenericGraph::GetGraphContextActions(FGraphContextMenuBui
 		Desc = FText::FromString(Title);
 	}
 
+	TSubclassOf<UGenericGraphNode> RootNodeType = Graph->RootNodeType;
+	if (RootNodeType && RootNodeType != Graph->NodeType)
+	{
+		// Don't include root node type
+		Visited.Add(RootNodeType);
+	}
+
 	if (!Graph->NodeType->HasAnyClassFlags(CLASS_Abstract))
 	{
 		TSharedPtr<FAssetSchemaAction_GenericGraph_NewNode> NewNodeAction(new FAssetSchemaAction_GenericGraph_NewNode(LOCTEXT("GenericGraphNodeAction", "Generic Graph Node"), Desc, AddToolTip, 0));
@@ -228,9 +255,6 @@ void UAssetGraphSchema_GenericGraph::GetGraphContextActions(FGraphContextMenuBui
 		if (It->IsChildOf(Graph->NodeType) && !It->HasAnyClassFlags(CLASS_Abstract) && !Visited.Contains(*It))
 		{
 			TSubclassOf<UGenericGraphNode> NodeType = *It;
-
-			if (It->GetName().StartsWith("REINST") || It->GetName().StartsWith("SKEL"))
-				continue;
 
 			if (!Graph->GetClass()->IsChildOf(NodeType.GetDefaultObject()->CompatibleGraphType))
 				continue;

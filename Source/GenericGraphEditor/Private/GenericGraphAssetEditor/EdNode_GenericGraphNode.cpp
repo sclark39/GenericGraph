@@ -76,6 +76,23 @@ UEdGraphPin* UEdNode_GenericGraphNode::GetOutputPin() const
 	return Pins[1];
 }
 
+bool UEdNode_GenericGraphNode::CanDuplicateNode() const
+{
+	bool bIsUniqueRoot = GenericGraphNode &&
+		GenericGraphNode->Graph->NodeType != GenericGraphNode->Graph->RootNodeType &&
+		GenericGraphNode->GetClass() == GenericGraphNode->Graph->RootNodeType;
+	return !bIsUniqueRoot;
+}
+
+bool UEdNode_GenericGraphNode::CanUserDeleteNode() const
+{
+	bool bIsUniqueRoot = GenericGraphNode &&
+		GenericGraphNode->Graph->NodeType != GenericGraphNode->Graph->RootNodeType &&
+		GenericGraphNode->GetClass() == GenericGraphNode->Graph->RootNodeType;
+	return !bIsUniqueRoot;
+}
+
+
 void UEdNode_GenericGraphNode::PostEditUndo()
 {
 	UEdGraphNode::PostEditUndo();
