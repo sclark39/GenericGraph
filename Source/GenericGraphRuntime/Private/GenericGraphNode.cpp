@@ -27,6 +27,13 @@ FText UGenericGraphNode::GetDescription_Implementation() const
 }
 
 #if WITH_EDITOR
+TSubclassOf<UGenericGraphEdge> UGenericGraphNode::GetEdgeType() const
+{
+	if (Graph->bEdgeEnabled)
+		return Graph->EdgeType;
+	return nullptr;
+}
+
 bool UGenericGraphNode::IsNameEditable() const
 {
 	return true;
