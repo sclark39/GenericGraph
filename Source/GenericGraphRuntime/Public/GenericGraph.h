@@ -22,6 +22,9 @@ public:
 	TSubclassOf<UGenericGraphNode> NodeType;
 
 	UPROPERTY(EditDefaultsOnly, Category = "GenericGraph")
+	TSubclassOf<UGenericGraphNode> RootNodeType;
+
+	UPROPERTY(EditDefaultsOnly, Category = "GenericGraph")
 	TSubclassOf<UGenericGraphEdge> EdgeType;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "GenericGraph")
