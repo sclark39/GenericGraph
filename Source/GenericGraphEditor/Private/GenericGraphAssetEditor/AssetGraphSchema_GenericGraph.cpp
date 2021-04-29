@@ -259,16 +259,21 @@ void UAssetGraphSchema_GenericGraph::GetGraphContextActions(FGraphContextMenuBui
 			if (!Graph->GetClass()->IsChildOf(NodeType.GetDefaultObject()->CompatibleGraphType))
 				continue;
 
-			Desc = NodeType.GetDefaultObject()->ContextMenuName;
+			UGenericGraphNode *DefaultObject = NodeType.GetDefaultObject();
 
+			Desc = DefaultObject->ContextMenuName;
 			if (Desc.IsEmpty())
 			{
 				FString Title = NodeType->GetName();
 				Title.RemoveFromEnd("_C");
 				Desc = FText::FromString(Title);
-			}
+			}		
 
-			TSharedPtr<FAssetSchemaAction_GenericGraph_NewNode> Action(new FAssetSchemaAction_GenericGraph_NewNode(LOCTEXT("GenericGraphNodeAction", "Generic Graph Node"), Desc, AddToolTip, 0));
+			FText Category = DefaultObject->ContextMenuCategory;
+			if (Category.IsEmpty())
+				Category = LOCTEXT("GenericGraphNodeAction", "Generic Graph Node");
+
+			TSharedPtr<FAssetSchemaAction_GenericGraph_NewNode> Action(new FAssetSchemaAction_GenericGraph_NewNode(Category, Desc, AddToolTip, 0));
 			Action->NodeTemplate = NewObject<UEdNode_GenericGraphNode>(ContextMenuBuilder.OwnerOfTemporaries);
 			Action->NodeTemplate->GenericGraphNode = NewObject<UGenericGraphNode>(Action->NodeTemplate, NodeType);
 			Action->NodeTemplate->GenericGraphNode->Graph = Graph;

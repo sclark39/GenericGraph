@@ -64,6 +64,9 @@ public:
 	FText ContextMenuName;
 
 	UPROPERTY(EditDefaultsOnly, Category = "GenericGraphNode_Editor")
+	FText ContextMenuCategory;
+
+	UPROPERTY(EditDefaultsOnly, Category = "GenericGraphNode_Editor")
 	ENodeLimit ParentLimitType;
 
 	UPROPERTY(EditDefaultsOnly, Category = "GenericGraphNode_Editor" ,meta = (ClampMin = "0",EditCondition = "ParentLimitType == ENodeLimit::Limited", EditConditionHides))
