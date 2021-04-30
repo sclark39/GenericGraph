@@ -242,6 +242,7 @@ void SEdNode_GenericGraphNode::CreatePinWidgets()
 		{
 			TSharedPtr<SGraphPin> NewPin = SNew(SGenericGraphPin, MyPin);
 
+
 			AddPin(NewPin.ToSharedRef());
 		}
 	}

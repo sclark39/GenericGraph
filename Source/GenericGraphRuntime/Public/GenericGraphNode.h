@@ -38,7 +38,7 @@ public:
 	TMap<UGenericGraphNode*, UGenericGraphEdge*> Edges;
 
 	UFUNCTION(BlueprintCallable, Category = "GenericGraphNode")
-	virtual UGenericGraphEdge* GetEdge(UGenericGraphNode* ChildNode);
+	virtual UGenericGraphEdge* GetEdge(const UGenericGraphNode* ChildNode) const;
 
 	UFUNCTION(BlueprintCallable, Category = "GenericGraphNode")
 	bool IsLeafNode() const;

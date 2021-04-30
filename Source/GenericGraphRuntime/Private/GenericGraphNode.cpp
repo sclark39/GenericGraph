@@ -8,7 +8,7 @@ UGenericGraphNode::UGenericGraphNode()
 #if WITH_EDITORONLY_DATA
 	CompatibleGraphType = UGenericGraph::StaticClass();
 
-	BackgroundColor = FLinearColor::Black;
+	BackgroundColor = FLinearColor(0.01f,0.01,0.01f);
 #endif
 }
 
@@ -16,7 +16,7 @@ UGenericGraphNode::~UGenericGraphNode()
 {
 }
 
-UGenericGraphEdge* UGenericGraphNode::GetEdge(UGenericGraphNode* ChildNode)
+UGenericGraphEdge* UGenericGraphNode::GetEdge(const UGenericGraphNode* ChildNode) const
 {
 	return Edges.Contains(ChildNode) ? Edges.FindChecked(ChildNode) : nullptr;
 }
