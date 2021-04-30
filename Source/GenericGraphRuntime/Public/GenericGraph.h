@@ -14,10 +14,7 @@ class GENERICGRAPHRUNTIME_API UGenericGraph : public UObject
 public:
 	UGenericGraph();
 	virtual ~UGenericGraph();
-
-	UPROPERTY(EditDefaultsOnly, Category = "GenericGraph")
-	FString Name;
-
+	
 	UPROPERTY(EditDefaultsOnly, Category = "GenericGraph")
 	TSubclassOf<UGenericGraphNode> NodeType;
 

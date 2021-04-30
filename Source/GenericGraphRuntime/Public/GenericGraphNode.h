@@ -11,7 +11,8 @@ UENUM(BlueprintType)
 enum class ENodeLimit : uint8
 {
 	Unlimited,
-    Limited
+    Limited,
+	Forbidden
 };
 
 
@@ -69,14 +70,14 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = "GenericGraphNode_Editor")
 	ENodeLimit ParentLimitType;
 
-	UPROPERTY(EditDefaultsOnly, Category = "GenericGraphNode_Editor" ,meta = (ClampMin = "0",EditCondition = "ParentLimitType == ENodeLimit::Limited", EditConditionHides))
-	int32 ParentLimit;
+	UPROPERTY(EditDefaultsOnly, Category = "GenericGraphNode_Editor" ,meta = (ClampMin = "1",EditCondition = "ParentLimitType == ENodeLimit::Limited", EditConditionHides))
+	int32 ParentLimit = 1;
 
 	UPROPERTY(EditDefaultsOnly, Category = "GenericGraphNode_Editor")
 	ENodeLimit ChildrenLimitType;
 
-	UPROPERTY(EditDefaultsOnly, Category = "GenericGraphNode_Editor" ,meta = (ClampMin = "0",EditCondition = "ChildrenLimitType == ENodeLimit::Limited", EditConditionHides))
-	int32 ChildrenLimit;
+	UPROPERTY(EditDefaultsOnly, Category = "GenericGraphNode_Editor" ,meta = (ClampMin = "1",EditCondition = "ChildrenLimitType == ENodeLimit::Limited", EditConditionHides))
+	int32 ChildrenLimit = 1;
 	
 #endif
 

@@ -61,6 +61,12 @@ bool UGenericGraphNode::CanCreateConnection(UGenericGraphNode* Other, FText& Err
 
 bool UGenericGraphNode::CanCreateConnectionTo(UGenericGraphNode* Other, int32 NumberOfChildrenNodes, FText& ErrorMessage)
 {
+	if (ChildrenLimitType == ENodeLimit::Forbidden || (ChildrenLimitType == ENodeLimit::Limited && ChildrenLimit <= 0))
+	{
+		ErrorMessage = FText::FromString("Node can not have children");
+		return false;
+	}
+
 	if (ChildrenLimitType == ENodeLimit::Limited && NumberOfChildrenNodes >= ChildrenLimit)
 	{
 		ErrorMessage = FText::FromString("Children limit exceeded");
@@ -72,6 +78,12 @@ bool UGenericGraphNode::CanCreateConnectionTo(UGenericGraphNode* Other, int32 Nu
 
 bool UGenericGraphNode::CanCreateConnectionFrom(UGenericGraphNode* Other, int32 NumberOfParentNodes, FText& ErrorMessage)
 {
+	if (ParentLimitType == ENodeLimit::Forbidden || (ParentLimitType == ENodeLimit::Limited && ParentLimit <= 0))
+	{
+		ErrorMessage = FText::FromString("Node can not have parents");
+		return false;
+	}
+
 	if (ParentLimitType == ENodeLimit::Limited && NumberOfParentNodes >= ParentLimit)
 	{
 		ErrorMessage = FText::FromString("Parent limit exceeded");
