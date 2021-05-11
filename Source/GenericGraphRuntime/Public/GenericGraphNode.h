@@ -8,7 +8,7 @@ class UGenericGraph;
 class UGenericGraphEdge;
 
 UENUM(BlueprintType)
-enum class ENodeLimit : uint8
+enum class EGenericGraphNodeLimit : uint8
 {
 	Unlimited,
     Limited,
@@ -68,13 +68,13 @@ public:
 	FText ContextMenuCategory;
 
 	UPROPERTY(EditDefaultsOnly, Category = "GenericGraphNode_Editor")
-	ENodeLimit ParentLimitType;
+	EGenericGraphNodeLimit ParentLimitType;
 
 	UPROPERTY(EditDefaultsOnly, Category = "GenericGraphNode_Editor" ,meta = (ClampMin = "1",EditCondition = "ParentLimitType == ENodeLimit::Limited", EditConditionHides))
 	int32 ParentLimit = 1;
 
 	UPROPERTY(EditDefaultsOnly, Category = "GenericGraphNode_Editor")
-	ENodeLimit ChildrenLimitType;
+	EGenericGraphNodeLimit ChildrenLimitType;
 
 	UPROPERTY(EditDefaultsOnly, Category = "GenericGraphNode_Editor" ,meta = (ClampMin = "1",EditCondition = "ChildrenLimitType == ENodeLimit::Limited", EditConditionHides))
 	int32 ChildrenLimit = 1;
