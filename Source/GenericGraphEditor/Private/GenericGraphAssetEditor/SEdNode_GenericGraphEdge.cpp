@@ -58,7 +58,7 @@ void SEdNode_GenericGraphEdge::OnNameTextCommited(const FText& InText, ETextComm
 
 	if (MyNode != nullptr && MyNode->GenericGraphEdge != nullptr)
 	{
-		const FScopedTransaction Transaction(LOCTEXT("GenericGraphEditorRenameEdge", GGS_RENAME_NODE));
+		const FScopedTransaction Transaction(LOCTEXT("GenericGraphEditorRenameEdge", GGS_RENAME_EDGE));
 		MyNode->Modify();
 		MyNode->GenericGraphEdge->SetNodeTitle(InText);
 		UpdateGraphNode();

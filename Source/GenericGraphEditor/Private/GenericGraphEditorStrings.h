@@ -24,6 +24,7 @@
 #define GGS_NEW_NODE					"New Node"
 #define GGS_NEW_EDGE					"New Edge"
 #define GGS_RENAME_NODE					"Rename Node"
+#define GGS_RENAME_EDGE					"Rename Edge"
 
 #define GGS_NODE_CONTEXTMENU_CAT		GGS_BASE_NAME ## " Node"
 

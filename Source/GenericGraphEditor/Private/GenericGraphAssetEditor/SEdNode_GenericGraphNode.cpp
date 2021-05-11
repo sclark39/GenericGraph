@@ -307,7 +307,7 @@ void SEdNode_GenericGraphNode::OnNameTextCommited(const FText& InText, ETextComm
 
 	if (MyNode != nullptr && MyNode->GenericGraphNode != nullptr)
 	{
-		const FScopedTransaction Transaction(LOCTEXT("GenericGraphEditorRenameNode", "Generic Graph Editor: Rename Node"));
+		const FScopedTransaction Transaction(LOCTEXT("GenericGraphEditorRenameNode", GGS_RENAME_NODE));
 		MyNode->Modify();
 		MyNode->GenericGraphNode->Modify();
 		MyNode->GenericGraphNode->SetNodeTitle(InText);
