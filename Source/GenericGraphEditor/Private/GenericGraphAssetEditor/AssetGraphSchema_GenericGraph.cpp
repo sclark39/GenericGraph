@@ -390,6 +390,8 @@ bool UAssetGraphSchema_GenericGraph::TryCreateConnection(UEdGraphPin* A, UEdGrap
 	// We don't actually care about the pin, we want the node that is being dragged between
 	UEdNode_GenericGraphNode* NodeA = Cast<UEdNode_GenericGraphNode>(A->GetOwningNode());
 	UEdNode_GenericGraphNode* NodeB = Cast<UEdNode_GenericGraphNode>(B->GetOwningNode());
+	if (!NodeA || !NodeB)
+		return false;
 
 	// Check that this edge doesn't already exist
 	for (UEdGraphPin *TestPin : NodeA->GetOutputPin()->LinkedTo)
