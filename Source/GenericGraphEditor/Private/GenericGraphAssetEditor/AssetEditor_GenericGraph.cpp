@@ -19,6 +19,8 @@
 #include "AutoLayout/TreeLayoutStrategy.h"
 #include "AutoLayout/ForceDirectedLayoutStrategy.h"
 
+#include "GenericGraphEditorStrings.h"
+
 #define LOCTEXT_NAMESPACE "AssetEditor_GenericGraph"
 
 const FName GenericGraphEditorAppName = FName(TEXT("GenericGraphEditorApp"));
@@ -123,7 +125,7 @@ void FAssetEditor_GenericGraph::InitGenericGraphAssetEditor(const EToolkitMode::
 
 void FAssetEditor_GenericGraph::RegisterTabSpawners(const TSharedRef<FTabManager>& InTabManager)
 {
-	WorkspaceMenuCategory = InTabManager->AddLocalWorkspaceMenuCategory(LOCTEXT("WorkspaceMenu_GenericGraphEditor", "Generic Graph Editor"));
+	WorkspaceMenuCategory = InTabManager->AddLocalWorkspaceMenuCategory(LOCTEXT("WorkspaceMenu_GenericGraphEditor", GGS_WORKSPACE_MENU_CATEGORY));
 	auto WorkspaceMenuCategoryRef = WorkspaceMenuCategory.ToSharedRef();
 
 	FAssetEditorToolkit::RegisterTabSpawners(InTabManager);
@@ -139,7 +141,7 @@ void FAssetEditor_GenericGraph::RegisterTabSpawners(const TSharedRef<FTabManager
 		.SetIcon(FSlateIcon(FEditorStyle::GetStyleSetName(), "LevelEditor.Tabs.Details"));
 
 	InTabManager->RegisterTabSpawner(FGenericGraphAssetEditorTabs::GenericGraphEditorSettingsID, FOnSpawnTab::CreateSP(this, &FAssetEditor_GenericGraph::SpawnTab_EditorSettings))
-		.SetDisplayName(LOCTEXT("EditorSettingsTab", "Generic Graph Editor Setttings"))
+		.SetDisplayName(LOCTEXT("EditorSettingsTab", GGS_SETTINGS_TAB_NAME))
 		.SetGroup(WorkspaceMenuCategoryRef)
 		.SetIcon(FSlateIcon(FEditorStyle::GetStyleSetName(), "LevelEditor.Tabs.Details"));
 }
@@ -160,7 +162,7 @@ FName FAssetEditor_GenericGraph::GetToolkitFName() const
 
 FText FAssetEditor_GenericGraph::GetBaseToolkitName() const
 {
-	return LOCTEXT("GenericGraphEditorAppLabel", "Generic Graph Editor");
+	return LOCTEXT("GenericGraphEditorAppLabel", GGS_BASE_TOOLKIT_NAME);
 }
 
 FText FAssetEditor_GenericGraph::GetToolkitName() const
@@ -247,7 +249,7 @@ TSharedRef<SDockTab> FAssetEditor_GenericGraph::SpawnTab_EditorSettings(const FS
 
 	return SNew(SDockTab)
 		.Icon(FEditorStyle::GetBrush("LevelEditor.Tabs.Details"))
-		.Label(LOCTEXT("EditorSettings_Title", "Generic Graph Editor Setttings"))
+		.Label(LOCTEXT("EditorSettings_Title", GGS_SETTINGS_TAB_NAME))
 		[
 			EditorSettingsWidget.ToSharedRef()
 		];
@@ -273,7 +275,7 @@ void FAssetEditor_GenericGraph::CreateInternalWidgets()
 TSharedRef<SGraphEditor> FAssetEditor_GenericGraph::CreateViewportWidget()
 {
 	FGraphAppearanceInfo AppearanceInfo;
-	AppearanceInfo.CornerText = LOCTEXT("AppearanceCornerText_GenericGraph", "Generic Graph");
+	AppearanceInfo.CornerText = LOCTEXT("AppearanceCornerText_GenericGraph", GGS_GRAPH_CORNERTEXT);
 
 	CreateCommandList();
 

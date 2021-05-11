@@ -93,7 +93,7 @@ void FGenericGraphDragConnection::HoverTargetChanged()
 			else
 			{
 #define LOCTEXT_NAMESPACE "AssetSchema_GenericGraph"
-				Response = FPinConnectionResponse(CONNECT_RESPONSE_DISALLOW, LOCTEXT("PinError", "Not a valid UGenericGraphEdNode"));
+				Response = FPinConnectionResponse(CONNECT_RESPONSE_DISALLOW, LOCTEXT("PinError", "Not a valid Node"));
 #undef LOCTEXT_NAMESPACE
 			}
 

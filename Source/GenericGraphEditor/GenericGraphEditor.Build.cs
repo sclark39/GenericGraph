@@ -8,6 +8,18 @@ public class GenericGraphEditor : ModuleRules
 		bLegacyPublicIncludePaths = false;
 		ShadowVariableWarningLevel = WarningLevel.Error;
 
+		PrivateDefinitions.AddRange(
+			new string[]
+			{
+				"GGS_BASE_NAME=\"Generic Graph\"",
+				"GGS_GRAPH_CORNERTEXT=\"Generic Graph\"",
+				"GGS_RESOURCES_DIRECTORY=\"GenericGraph/Resources\"",
+
+				"GG_SHOULD_REGISTER_ASSET_TYPE=1"
+			}
+		);
+
+
 		PublicIncludePaths.AddRange(
 			new string[] {
 				// ... add public include paths required here ...

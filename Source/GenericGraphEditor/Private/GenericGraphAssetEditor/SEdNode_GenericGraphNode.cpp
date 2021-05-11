@@ -10,6 +10,8 @@
 #include "GenericGraphAssetEditor/EdNode_GenericGraphNode.h"
 #include "GenericGraphAssetEditor/GenericGraphDragConnection.h"
 
+#include "GenericGraphEditorStrings.h"
+
 #define LOCTEXT_NAMESPACE "EdNode_GenericGraph"
 
 //////////////////////////////////////////////////////////////////////////

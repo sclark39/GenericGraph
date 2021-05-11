@@ -11,14 +11,16 @@ void FGenericGraphEditor::StartupModule()
 {
 	FGenericGraphEditorStyle::Initialize();
 
+	// Make Node Factory
 	GraphPanelNodeFactory_GenericGraph = MakeShareable(new FGraphPanelNodeFactory_GenericGraph());
 	FEdGraphUtilities::RegisterVisualNodeFactory(GraphPanelNodeFactory_GenericGraph);
 
+	// Add to New Asset Context Menu
+#if GG_SHOULD_REGISTER_ASSET_TYPE
 	IAssetTools& AssetTools = FModuleManager::LoadModuleChecked<FAssetToolsModule>("AssetTools").Get();
-
 	GenericGraphAssetCategoryBit = AssetTools.RegisterAdvancedAssetCategory(FName(TEXT("GenericGraph")), LOCTEXT("GenericGraphAssetCategory", "GenericGraph"));
-
 	RegisterAssetTypeAction(AssetTools, MakeShareable(new FAssetTypeActions_GenericGraph(GenericGraphAssetCategoryBit)));
+#endif // #if GG_SHOULD_ADD_TO_CONTEXTMENU
 }
 
 

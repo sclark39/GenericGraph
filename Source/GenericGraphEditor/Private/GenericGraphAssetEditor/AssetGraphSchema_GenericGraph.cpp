@@ -9,6 +9,8 @@
 #include "AutoLayout/ForceDirectedLayoutStrategy.h"
 #include "AutoLayout/TreeLayoutStrategy.h"
 
+#include "GenericGraphEditorStrings.h"
+
 #define LOCTEXT_NAMESPACE "AssetSchema_GenericGraph"
 
 int32 UAssetGraphSchema_GenericGraph::CurrentCacheRefreshID = 0;
@@ -72,7 +74,7 @@ UEdGraphNode* FAssetSchemaAction_GenericGraph_NewNode::PerformAction(class UEdGr
 
 	if (NodeTemplate != nullptr)
 	{
-		const FScopedTransaction Transaction(LOCTEXT("GenericGraphEditorNewNode", "Generic Graph Editor: New Node"));
+		const FScopedTransaction Transaction(LOCTEXT("GenericGraphEditorNewNode", GGS_NEW_NODE));
 		ParentGraph->Modify();
 		if (FromPin != nullptr)
 			FromPin->Modify();
@@ -109,7 +111,7 @@ UEdGraphNode* FAssetSchemaAction_GenericGraph_NewEdge::PerformAction(class UEdGr
 
 	if (NodeTemplate != nullptr)
 	{
-		const FScopedTransaction Transaction(LOCTEXT("GenericGraphEditorNewEdge", "Generic Graph Editor: New Edge"));
+		const FScopedTransaction Transaction(LOCTEXT("GenericGraphEditorNewEdge", GGS_NEW_EDGE));
 		ParentGraph->Modify();
 		if (FromPin != nullptr)
 			FromPin->Modify();
@@ -274,7 +276,7 @@ void UAssetGraphSchema_GenericGraph::GetGraphContextActions(FGraphContextMenuBui
 
 			FText Category = DefaultObject->ContextMenuCategory;
 			if (Category.IsEmpty())
-				Category = LOCTEXT("GenericGraphNodeAction", "Generic Graph Node");
+				Category = LOCTEXT("GenericGraphNodeAction", GGS_NODE_CONTEXTMENU_CAT);
 
 			TSharedPtr<FAssetSchemaAction_GenericGraph_NewNode> Action(new FAssetSchemaAction_GenericGraph_NewNode(Category, Desc, AddToolTip, 0));
 			Action->NodeTemplate = NewObject<UEdNode_GenericGraphNode>(ContextMenuBuilder.OwnerOfTemporaries);			
@@ -346,7 +348,7 @@ const FPinConnectionResponse UAssetGraphSchema_GenericGraph::CanCreateConnection
 
 	if (EdNode_Out == nullptr || EdNode_In == nullptr)
 	{
-		return FPinConnectionResponse(CONNECT_RESPONSE_DISALLOW, LOCTEXT("PinError", "Not a valid UGenericGraphEdNode"));
+		return FPinConnectionResponse(CONNECT_RESPONSE_DISALLOW, LOCTEXT("PinError", "Not a valid Node"));
 	}
 		
 	//Determine if we can have cycles or not

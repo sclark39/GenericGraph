@@ -3,6 +3,8 @@
 #include "Styling/SlateTypes.h"
 #include "Misc/Paths.h"
 
+#include "GenericGraphEditorStrings.h"
+
 TSharedPtr<FSlateStyleSet> FGenericGraphEditorStyle::StyleSet = nullptr;
 
 #define IMAGE_BRUSH( RelativePath, ... ) FSlateImageBrush( StyleSet->RootToContentDir( RelativePath, TEXT(".png") ), __VA_ARGS__ )
@@ -24,7 +26,7 @@ void FGenericGraphEditorStyle::Initialize()
 
 	StyleSet = MakeShareable(new FSlateStyleSet("GenericGraphEditorStyle"));
 
-	StyleSet->SetContentRoot(FPaths::ProjectPluginsDir() / TEXT("GenericGraph/Resources"));
+	StyleSet->SetContentRoot(FPaths::ProjectPluginsDir() / TEXT(GGS_RESOURCES_DIRECTORY));
 
 	StyleSet->Set("GenericGraphEditor.AutoArrange", new IMAGE_BRUSH("AutoArrangeIcon", Icon40x40));
 	StyleSet->Set("GenericGraphEditor.AutoArrange.Small", new IMAGE_BRUSH( "AutoArrangeIcon", Icon20x20 ) );

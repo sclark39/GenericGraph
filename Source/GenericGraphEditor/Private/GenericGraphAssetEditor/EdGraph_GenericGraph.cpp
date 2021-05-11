@@ -4,6 +4,8 @@
 #include "GenericGraphAssetEditor/EdNode_GenericGraphNode.h"
 #include "GenericGraphAssetEditor/EdNode_GenericGraphEdge.h"
 
+#include "GenericGraphEditorStrings.h"
+
 UEdGraph_GenericGraph::UEdGraph_GenericGraph()
 {
 
@@ -16,7 +18,7 @@ UEdGraph_GenericGraph::~UEdGraph_GenericGraph()
 
 void UEdGraph_GenericGraph::RebuildGenericGraph()
 {
-	LOG_INFO(TEXT("UGenericGraphEdGraph::RebuildGenericGraph has been called"));
+	LOG_INFO(TEXT(GGS_REBUILD_GRAPH_LOG));
 
 	UGenericGraph* Graph = GetGenericGraph();
 
@@ -66,7 +68,7 @@ void UEdGraph_GenericGraph::RebuildGenericGraph()
 					}
 					else
 					{
-						LOG_ERROR(TEXT("UEdGraph_GenericGraph::RebuildGenericGraph can't find child node"));
+						LOG_ERROR(TEXT(GGS_REBUILD_GRAPH_ERR_NO_NODE));
 					}
 				}
 			}
@@ -79,7 +81,7 @@ void UEdGraph_GenericGraph::RebuildGenericGraph()
 
 			if (StartNode == nullptr || EndNode == nullptr || Edge == nullptr)
 			{
-				LOG_ERROR(TEXT("UEdGraph_GenericGraph::RebuildGenericGraph add edge failed."));
+				LOG_ERROR(TEXT(GGS_REBUILD_GRAPH_ERR_BAD_EDGE));
 				continue;
 			}
 
