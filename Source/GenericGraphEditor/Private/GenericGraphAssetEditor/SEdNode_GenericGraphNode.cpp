@@ -46,7 +46,9 @@ public:
 protected:
 	virtual FSlateColor GetPinColor() const override
 	{
-		return GenericGraphColors::Pin::Default;
+		return IsHovered() ?
+			FLinearColor::White : 
+			GenericGraphColors::Pin::Default;
 	}
 
 	virtual TSharedRef<SWidget>	GetDefaultValueWidget() override
@@ -82,6 +84,7 @@ void SEdNode_GenericGraphNode::Construct(const FArguments& InArgs, UEdNode_Gener
 {
 	GraphNode = InNode;
 	UpdateGraphNode();
+	SetCursor(EMouseCursor::CardinalCross);
 	InNode->SEdNode = this;
 }
 
