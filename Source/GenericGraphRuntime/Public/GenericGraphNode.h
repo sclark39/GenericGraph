@@ -98,5 +98,8 @@ public:
 
 	virtual bool CanCreateConnectionTo(UGenericGraphNode* Other, int32 NumberOfChildrenNodes, FText& ErrorMessage);
 	virtual bool CanCreateConnectionFrom(UGenericGraphNode* Other, int32 NumberOfParentNodes, FText& ErrorMessage);
+
+	virtual void GetChildrenLimit(EGenericGraphNodeLimit &LimitType, int32 &LimitCount) const;
+	virtual void GetParentLimit(EGenericGraphNodeLimit &LimitType, int32 &LimitCount) const;
 #endif
 };

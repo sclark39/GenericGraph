@@ -61,13 +61,17 @@ bool UGenericGraphNode::CanCreateConnection(UGenericGraphNode* Other, FText& Err
 
 bool UGenericGraphNode::CanCreateConnectionTo(UGenericGraphNode* Other, int32 NumberOfChildrenNodes, FText& ErrorMessage)
 {
-	if (ChildrenLimitType == EGenericGraphNodeLimit::Forbidden || (ChildrenLimitType == EGenericGraphNodeLimit::Limited && ChildrenLimit <= 0))
+	EGenericGraphNodeLimit LimitType;
+	int LimitCount;
+	GetChildrenLimit(LimitType, LimitCount);
+
+	if (LimitType == EGenericGraphNodeLimit::Forbidden || (LimitType == EGenericGraphNodeLimit::Limited && ChildrenLimit <= 0))
 	{
 		ErrorMessage = FText::FromString("Node can not have children");
 		return false;
 	}
 
-	if (ChildrenLimitType == EGenericGraphNodeLimit::Limited && NumberOfChildrenNodes >= ChildrenLimit)
+	if (LimitType == EGenericGraphNodeLimit::Limited && NumberOfChildrenNodes >= LimitCount)
 	{
 		ErrorMessage = FText::FromString("Children limit exceeded");
 		return false;
@@ -78,13 +82,17 @@ bool UGenericGraphNode::CanCreateConnectionTo(UGenericGraphNode* Other, int32 Nu
 
 bool UGenericGraphNode::CanCreateConnectionFrom(UGenericGraphNode* Other, int32 NumberOfParentNodes, FText& ErrorMessage)
 {
-	if (ParentLimitType == EGenericGraphNodeLimit::Forbidden || (ParentLimitType == EGenericGraphNodeLimit::Limited && ParentLimit <= 0))
+	EGenericGraphNodeLimit LimitType;
+	int LimitCount;
+	GetParentLimit(LimitType, LimitCount);
+
+	if (LimitType == EGenericGraphNodeLimit::Forbidden || (LimitType == EGenericGraphNodeLimit::Limited && LimitCount <= 0))
 	{
 		ErrorMessage = FText::FromString("Node can not have parents");
 		return false;
 	}
 
-	if (ParentLimitType == EGenericGraphNodeLimit::Limited && NumberOfParentNodes >= ParentLimit)
+	if (LimitType == EGenericGraphNodeLimit::Limited && NumberOfParentNodes >= LimitCount)
 	{
 		ErrorMessage = FText::FromString("Parent limit exceeded");
 		return false;
@@ -97,6 +105,19 @@ const FSlateBrush* UGenericGraphNode::GetNodeIcon() const
 {
 	return FEditorStyle::GetBrush(TEXT("BTEditor.Graph.BTNode.Icon"));
 }
+
+void UGenericGraphNode::GetChildrenLimit(EGenericGraphNodeLimit &LimitType, int32 &LimitCount) const
+{
+	LimitType = ChildrenLimitType;
+	LimitCount = ChildrenLimit;
+}
+
+void UGenericGraphNode::GetParentLimit(EGenericGraphNodeLimit &LimitType, int32 &LimitCount) const
+{
+	LimitType = ParentLimitType;
+	LimitCount = ParentLimit;
+}
+
 
 #endif
 
