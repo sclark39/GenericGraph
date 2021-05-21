@@ -9,6 +9,7 @@
 #include "GraphEditorSettings.h"
 #include "GenericGraphAssetEditor/EdNode_GenericGraphNode.h"
 #include "GenericGraphAssetEditor/GenericGraphDragConnection.h"
+#include "IDocumentation.h"
 
 #include "GenericGraphEditorStrings.h"
 
@@ -228,10 +229,42 @@ void SEdNode_GenericGraphNode::UpdateGraphNode()
 			CommentBubble.ToSharedRef()
 		];
 
+	if (!SWidget::GetToolTip().IsValid())
+	{
+		TSharedRef<SToolTip> DefaultToolTip = 
+			IDocumentation::Get()->CreateToolTip(
+				TAttribute< FText >(this, &SEdNode_GenericGraphNode::GetNodeTooltip),
+				NULL, 
+				GraphNode->GetDocumentationLink(), 
+				GraphNode->GetDocumentationExcerptName());
+		SetToolTip(DefaultToolTip);
+	}
+
 	ErrorReporting = ErrorText;
 	ErrorReporting->SetError(ErrorMsg);
 	CreatePinWidgets();
 }
+
+
+FText SEdNode_GenericGraphNode::GetNodeTooltip() const
+{
+	if (GraphNode != NULL)
+	{
+		FText TooltipText = GraphNode->GetTooltipText();
+
+		if (TooltipText.IsEmpty())
+		{
+			TooltipText = GraphNode->GetNodeTitle(ENodeTitleType::FullTitle);
+		}
+
+		return TooltipText;
+	}
+	else
+	{
+		return NSLOCTEXT("GraphEditor", "InvalidGraphNode", "<Invalid graph node>");
+	}
+}
+
 
 void SEdNode_GenericGraphNode::CreatePinWidgets()
 {

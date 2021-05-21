@@ -9,6 +9,7 @@ class UEdNode_GenericGraphEdge;
 class UEdGraph_GenericGraph;
 class SEdNode_GenericGraphNode;
 
+
 UCLASS(MinimalAPI)
 class UEdNode_GenericGraphNode : public UEdGraphNode
 {
@@ -25,6 +26,9 @@ public:
 	UEdGraph_GenericGraph* GetGenericGraphEdGraph();
 
 	SEdNode_GenericGraphNode* SEdNode;
+
+	virtual FString GetDocumentationExcerptName() const override;
+	virtual FText GetTooltipText() const override;
 
 	virtual void AllocateDefaultPins() override;
 	virtual FText GetNodeTitle(ENodeTitleType::Type TitleType) const override;

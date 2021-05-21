@@ -55,6 +55,9 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = "GenericGraphNode_Editor")
 	FText NodeTitle;
 
+	UPROPERTY(EditDefaultsOnly, Category = "GenericGraphNode_Editor")
+	FText NodeTooltip;
+
 	UPROPERTY(VisibleDefaultsOnly, Category = "GenericGraphNode_Editor")
 	TSubclassOf<UGenericGraph> CompatibleGraphType;
 
@@ -66,6 +69,9 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, Category = "GenericGraphNode_Editor")
 	FText ContextMenuCategory;
+
+	UPROPERTY(EditDefaultsOnly, Category = "GenericGraphNode_Editor")
+	FText ContextMenuDescription;
 
 	UPROPERTY(EditDefaultsOnly, Category = "GenericGraphNode_Editor")
 	EGenericGraphNodeLimit ParentLimitType;
@@ -89,6 +95,11 @@ public:
 	virtual FLinearColor GetBackgroundColor() const;
 
 	virtual FText GetNodeTitle() const;
+	virtual FText GetNodeTooltip() const;
+
+	virtual FText GetContextMenuName() const;
+	virtual FText GetContextMenuCategory() const;
+	virtual FText GetContextMenuDescription() const;
 
 	virtual void SetNodeTitle(const FText& NewTitle);
 

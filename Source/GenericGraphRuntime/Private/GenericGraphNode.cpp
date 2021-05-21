@@ -54,6 +54,26 @@ void UGenericGraphNode::SetNodeTitle(const FText& NewTitle)
 	NodeTitle = NewTitle;
 }
 
+FText UGenericGraphNode::GetNodeTooltip() const
+{
+	return NodeTooltip.IsEmpty() ? GetClass()->GetToolTipText() : NodeTooltip;
+}
+
+FText UGenericGraphNode::GetContextMenuName() const
+{
+	return ContextMenuName;
+}
+
+FText UGenericGraphNode::GetContextMenuCategory() const
+{
+	return ContextMenuCategory;
+}
+
+FText UGenericGraphNode::GetContextMenuDescription() const
+{
+	return ContextMenuDescription;
+}
+
 bool UGenericGraphNode::CanCreateConnection(UGenericGraphNode* Other, FText& ErrorMessage)
 {	
 	return true;
