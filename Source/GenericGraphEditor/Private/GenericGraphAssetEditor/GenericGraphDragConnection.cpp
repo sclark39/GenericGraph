@@ -2,6 +2,7 @@
 
 
 #include "GenericGraphAssetEditor/GenericGraphDragConnection.h"
+#include "GenericGraphAssetEditor/EdNode_GenericGraphNode.h"
 #include "Widgets/SBoxPanel.h"
 #include "Framework/Application/SlateApplication.h"
 #include "Widgets/Images/SImage.h"

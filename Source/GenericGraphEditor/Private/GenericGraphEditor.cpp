@@ -7,6 +7,8 @@ DEFINE_LOG_CATEGORY(GenericGraphEditor)
 
 #define LOCTEXT_NAMESPACE "Editor_GenericGraph"
 
+IMPLEMENT_MODULE(FGenericGraphEditor, GenericGraphEditor)
+
 void FGenericGraphEditor::StartupModule()
 {
 	FGenericGraphEditorStyle::Initialize();
