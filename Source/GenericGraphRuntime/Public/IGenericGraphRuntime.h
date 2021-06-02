@@ -2,7 +2,7 @@
 
 #include "Modules/ModuleManager.h"
 
-DECLARE_LOG_CATEGORY_EXTERN(GenericGraphRuntime, Log, All);
+DECLARE_LOG_CATEGORY_EXTERN(LogGenericGraph, Log, All);
 
 /**
  * The public interface to this module

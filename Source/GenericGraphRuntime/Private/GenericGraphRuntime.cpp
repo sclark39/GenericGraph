@@ -1,6 +1,6 @@
 #include "GenericGraphRuntimePCH.h"
 
-DEFINE_LOG_CATEGORY(GenericGraphRuntime)
+DEFINE_LOG_CATEGORY(LogGenericGraph)
 
 class FGenericGraphRuntime : public IGenericGraphRuntime
 {
