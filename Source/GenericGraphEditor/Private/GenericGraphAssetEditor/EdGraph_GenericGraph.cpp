@@ -16,9 +16,18 @@ UEdGraph_GenericGraph::~UEdGraph_GenericGraph()
 
 }
 
+void UEdGraph_GenericGraph::RebuildGenericGraphIncremental()
+{
+	UGenericGraph* Graph = GetGenericGraph();
+	if (Graph->bRebuildAfterEveryChange)
+	{
+		RebuildGenericGraph();
+	}
+}
+
 void UEdGraph_GenericGraph::RebuildGenericGraph()
 {
-	LOG_INFO(TEXT(GGS_REBUILD_GRAPH_LOG));
+	UE_LOG(LogGenericGraph, Verbose, TEXT(GGS_REBUILD_GRAPH_LOG));
 
 	UGenericGraph* Graph = GetGenericGraph();
 
@@ -135,6 +144,8 @@ bool UEdGraph_GenericGraph::Modify(bool bAlwaysMarkDirty /*= true*/)
 	{
 		Nodes[i]->Modify();
 	}
+
+	RebuildGenericGraphIncremental();
 
 	return Rtn;
 }

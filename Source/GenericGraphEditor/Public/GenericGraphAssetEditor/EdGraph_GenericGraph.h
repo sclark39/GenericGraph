@@ -19,6 +19,7 @@ public:
 	UEdGraph_GenericGraph();
 	virtual ~UEdGraph_GenericGraph();
 
+	virtual void RebuildGenericGraphIncremental();
 	virtual void RebuildGenericGraph();
 
 	UGenericGraph* GetGenericGraph() const;
