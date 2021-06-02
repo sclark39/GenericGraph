@@ -19,7 +19,7 @@ UEdGraph_GenericGraph::~UEdGraph_GenericGraph()
 void UEdGraph_GenericGraph::RebuildGenericGraphIncremental()
 {
 	UGenericGraph* Graph = GetGenericGraph();
-	if (Graph->bRebuildAfterEveryChange)
+	if (Graph->ShouldAllowIncrementalRebuild())
 	{
 		RebuildGenericGraph();
 	}

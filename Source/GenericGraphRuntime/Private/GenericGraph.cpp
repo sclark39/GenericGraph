@@ -15,6 +15,8 @@ UGenericGraph::UGenericGraph()
 	EdGraph = nullptr;
 
 	bCanRenameNode = true;
+
+	bRebuildAfterEveryChange = false;
 #endif
 }
 
