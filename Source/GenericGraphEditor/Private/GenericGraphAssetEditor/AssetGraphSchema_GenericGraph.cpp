@@ -330,7 +330,7 @@ const FPinConnectionResponse UAssetGraphSchema_GenericGraph::CanCreateConnection
 	UEdNode_GenericGraphNode* EdNode_Out = Cast<UEdNode_GenericGraphNode>(Out->GetOwningNode());
 	UEdNode_GenericGraphNode* EdNode_In = Cast<UEdNode_GenericGraphNode>(In->GetOwningNode());
 
-	if (EdNode_Out == nullptr || EdNode_In == nullptr)
+	if (EdNode_Out == nullptr || EdNode_In == nullptr || EdNode_Out->GenericGraphNode == nullptr || EdNode_In->GenericGraphNode == nullptr )
 	{
 		return FPinConnectionResponse(CONNECT_RESPONSE_DISALLOW, LOCTEXT("PinError", "Not a valid Node"));
 	}

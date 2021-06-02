@@ -79,7 +79,10 @@ void UEdGraph_GenericGraph::RebuildGenericGraph()
 			UEdNode_GenericGraphNode* EndNode = EdgeNode->GetEndNode();
 			UGenericGraphEdge* Edge = EdgeNode->GenericGraphEdge;
 
-			if (StartNode == nullptr || EndNode == nullptr || Edge == nullptr)
+			if (StartNode == nullptr || EndNode == nullptr || Edge == nullptr 
+				|| StartNode->GenericGraphNode == nullptr 
+				|| EndNode->GenericGraphNode == nullptr
+				|| Edge->EndNode == nullptr)
 			{
 				LOG_ERROR(TEXT(GGS_REBUILD_GRAPH_ERR_BAD_EDGE));
 				continue;
