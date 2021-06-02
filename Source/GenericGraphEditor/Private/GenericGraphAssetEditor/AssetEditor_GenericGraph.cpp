@@ -604,6 +604,28 @@ void FAssetEditor_GenericGraph::PasteNodesHere(const FVector2D& Location)
 		TSet<UEdGraphNode*> PastedNodes;
 		FEdGraphUtilities::ImportNodesFromText(EdGraph, TextToImport, PastedNodes);
 
+		// Kill any that aren't allowed
+		for (auto EdNode : PastedNodes)
+		{
+			if (auto EdNode_Node = Cast<UEdNode_GenericGraphNode>(EdNode))
+			{
+				if (EdNode_Node->CanDuplicateNode())
+					continue;
+
+				EdNode_Node->Modify();
+
+				auto Schema = EdNode_Node->GetSchema();
+				if (Schema != nullptr)
+				{
+					Schema->BreakNodeLinks(*EdNode_Node);
+				}
+
+				EdNode_Node->DestroyNode();
+
+				PastedNodes.Remove(EdNode);
+			}
+		}
+
 		//Average position of nodes so we can move them while still maintaining relative distances to each other
 		FVector2D AvgNodePosition(0.0f, 0.0f);
 
