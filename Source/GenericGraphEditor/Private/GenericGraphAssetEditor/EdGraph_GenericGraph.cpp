@@ -90,8 +90,7 @@ void UEdGraph_GenericGraph::RebuildGenericGraph()
 
 			if (StartNode == nullptr || EndNode == nullptr || Edge == nullptr 
 				|| StartNode->GenericGraphNode == nullptr 
-				|| EndNode->GenericGraphNode == nullptr
-				|| Edge->EndNode == nullptr)
+				|| EndNode->GenericGraphNode == nullptr)
 			{
 				LOG_ERROR(TEXT(GGS_REBUILD_GRAPH_ERR_BAD_EDGE));
 				continue;
